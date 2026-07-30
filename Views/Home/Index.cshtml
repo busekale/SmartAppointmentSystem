@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+    <div class="container-fluid py-3">
+        <h1 class="display-5 fw-bold">Akıllı Randevu Sistemi</h1>
+
+        <p class="fs-5 text-muted">
+            Randevularınızı kolayca oluşturun, düzenleyin ve takip edin.
+        </p>
+
+        <a asp-controller="Appointments"
+           asp-action="Create"
+           class="btn btn-primary btn-lg me-2">
+            Yeni Randevu Oluştur
+        </a>
+
+        <a asp-controller="Appointments"
+           asp-action="Index"
+           class="btn btn-outline-dark btn-lg">
+            Randevuları Görüntüle
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 border-primary shadow-sm">
+            <div class="card-body">
+                <h5 class="text-primary">Toplam Randevu</h5>
+                <p class="display-4 fw-bold mb-0">
+                    @ViewBag.TotalAppointments
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 border-warning shadow-sm">
+            <div class="card-body">
+                <h5 class="text-warning">Bekleyen</h5>
+                <p class="display-4 fw-bold mb-0">
+                    @ViewBag.PendingAppointments
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 border-success shadow-sm">
+            <div class="card-body">
+                <h5 class="text-success">Tamamlanan</h5>
+                <p class="display-4 fw-bold mb-0">
+                    @ViewBag.CompletedAppointments
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card h-100 border-info shadow-sm">
+            <div class="card-body">
+                <h5 class="text-info">Bugünkü Randevu</h5>
+                <p class="display-4 fw-bold mb-0">
+                    @ViewBag.TodayAppointments
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h2>Hızlı İşlemler</h2>
+
+    <div class="list-group shadow-sm mt-3">
+        <a asp-controller="Appointments"
+           asp-action="Create"
+           class="list-group-item list-group-item-action">
+            Yeni bir randevu oluştur
+        </a>
+
+        <a asp-controller="Appointments"
+           asp-action="Index"
+           class="list-group-item list-group-item-action">
+            Randevuları kontrol et
+        </a>
+    </div>
+</div>

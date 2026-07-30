@@ -1,0 +1,94 @@
+@model IEnumerable<SmartAppointmentSystem.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevular";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Randevular</h1>
+        <p class="text-muted">
+            Tüm randevuları buradan takip edebilirsiniz.
+        </p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        Yeni Randevu Oluştur
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Henüz bir randevu oluşturulmadı.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Ad Soyad</th>
+                    <th>Hizmet</th>
+                    <th>Tarih</th>
+                    <th>Telefon</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var appointment in Model)
+                {
+                    var badgeClass = appointment.Status switch
+                    {
+                        "Tamamlandı" => "bg-success",
+                        "İptal Edildi" => "bg-danger",
+                        _ => "bg-warning text-dark"
+                    };
+
+                    <tr>
+                        <td>@appointment.CustomerName</td>
+                        <td>@appointment.Service</td>
+                        <td>
+                            @appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")
+                        </td>
+                        <td>@appointment.Phone</td>
+                        <td>
+                            <span class="badge @badgeClass">
+                                @appointment.Status
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+                                <a asp-action="Edit"
+                                   asp-route-id="@appointment.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                    Düzenle
+                                </a>
+
+                                <form asp-action="ChangeStatus"
+                                      asp-route-id="@appointment.Id"
+                                      method="post">
+                                    <button class="btn btn-sm btn-outline-success">
+                                        Durumu Değiştir
+                                    </button>
+                                </form>
+
+                                <form asp-action="Delete"
+                                      asp-route-id="@appointment.Id"
+                                      method="post"
+                                      onsubmit="return confirm('Bu randevu silinsin mi?');">
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        Sil
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
